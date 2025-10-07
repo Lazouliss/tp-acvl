@@ -1,0 +1,42 @@
+@startuml
+
+left to right direction
+
+actor Joueur
+actor PNJ
+
+:Joueur: -- (Intéragir)
+
+note "Le joueur peut intéragir avec des objets,\ndes portes ou des PNJ" as N_Intéragir
+N_Intéragir .. (Intéragir)
+
+
+(Intéragir) ..> (Ramasser un objet) :inclut
+(Ramasser un objet) ..> (Collision avec l'objet) :inclut
+
+(Ramasser un objet) <.. (Collecter / Consommer) :etend \n[condition : piece ou potion]
+(Collecter / Consommer) <.. (Boire potion) :etend \n[condition : objet = potion]
+(Collecter / Consommer) <.. (Ramasser piece) :etend \n[condition : objet = piece]
+
+(Ramasser un objet) <.left. (Equiper) :etend \n[condition : est equipable ?]
+(Equiper) <.. (Equiper l'objet) :etend \n[condition : slot vide]
+(Equiper) <.left. (Echanger l'objet) :etend \n[condition : slot occupe]
+(Echanger l'objet) ..> (Déposer l'objet) :inclut
+(Déposer l'objet) ..> (Le placer sur une case disponible) :inclut
+
+(Intéragir) .left.> (Ouvrir une porte) :etend \n[condition : collision avec une porte]
+(Ouvrir une porte) ..> (Changer de salle) :inclut
+
+:PNJ: -- (Dialogue)
+note bottom of (Dialogue)
+ Un PNJ affiche un dialogue
+ lorqu'il voit le joueur
+end note
+(Intéragir) .right.> (Parler à un PNJ) :etend \n[condition : collision avec un PNJ]
+(Parler à un PNJ) .right.> (Dialogue) :inclut
+(Parler à un PNJ) ..> (Vérifier le solde de pièces) :inclut
+(Parler à un PNJ) <.. (Echanger un objet) :etend \n[condition : le joueur intéragit]
+
+
+@enduml
+
