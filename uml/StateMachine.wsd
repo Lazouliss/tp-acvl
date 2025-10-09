@@ -1,0 +1,50 @@
+@startuml
+'[*] --> Combat
+
+' state Combat {
+'     [*] -> Attaquer
+
+'     Attaquer -> DegatEnnemi :Appuie sur la touche de combat [l'ennemi est à porté]
+'     Attaquer -> CoupLoupe :Appuie sur la touche de combat [pas d'ennemi à porté]
+
+
+'     --
+
+'     [*] -> EnnemiDeplacement
+'     EnnemiDeplacement -> EnnemiProjectile :Le joueur est à porté de lancer
+'     EnnemiProjectile -> EnnemiDeplacement :*
+'     EnnemiDeplacement -left-> EnnemiMort :L'ennemi n'a plus de vie
+
+'     --
+
+'     [*] -> Init
+'     Init -> DegatJoueur :Le joueur touche un projectile
+'     DegatJoueur -> Init :*
+
+    
+' }
+
+' Combat -> MortJoueur :Le joueur n'a plus de vie
+
+[*] --> Combat
+state Combat {
+    [*] --> IdleJoueur
+    IdleJoueur -> Attaque :Joueur lance une attaque / Animation
+    Attaque -down-> DegatEnnemi :Ennemi à porté / Animation de dégat
+    DegatEnnemi -> Idle :*
+    Attaque -left-> Idle :Pas d'ennemi à porté 
+
+    --
+    [*] -right-> IdleEnnemi
+    IdleEnnemi -> DeplacerVersLeJoueur  :Ennemi à detecter le joueur
+    DeplacerVersLeJoueur -down-> IdleEnnemi :*
+    IdleEnnemi -down-> LancerProjectile :Joueur à porter / Création Projectile
+    LancerProjectile -> IdleEnnemi :*
+    IdleEnnemi -> EnnemiMort :L'ennemi n'a plus de vie / Animation de mort
+    IdleEnnemi -up-> DegatJoueur :Le joueur touche un projectile / Animation de dégat
+    DegatJoueur -> IdleEnnemi :*
+}   
+Combat -> MortJoueur :Le joueur n'a plus de vie / Ecran de mort
+
+@enduml
+
