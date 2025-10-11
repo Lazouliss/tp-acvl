@@ -1,0 +1,62 @@
+@startuml Sequence_Combat
+actor Joueur
+
+participant "Etat IdleJoueur" as EtatIdleJoueur
+participant "Etat Attaquer" as EtatAttaquer
+participant "Etat DegatEnnemi" as EtatDegatEnnemi
+participant "Etat CoupLoupe" as EtatCoupLoupe
+participant "Etat MortJoueur" as EtatMortJoueur
+
+participant "Etat DegatJoueur" as EtatDegatJoueur
+participant "Etat EnnemiMort" as EtatEnnemiMort
+participant "Etat EnnemiProjectile" as EtatEnnemiProjectile
+participant "Etat EnnemiDeplacement" as EtatEnnemiDeplacement
+participant "Etat CombatEnnemi" as EtatCombatEnnemi
+participant "Etat IdleEnnemi" as EtatIdleEnnemi
+
+actor Ennemi
+
+Joueur -> EtatIdleJoueur : Lancement du jeu
+
+Ennemi -> EtatIdleEnnemi : Lancement du jeu
+EtatIdleEnnemi -> EtatCombatEnnemi : Détection du joueur
+
+loop Combat
+    alt Attaque réussie
+        EtatIdleJoueur -> EtatAttaquer : Appuie sur la touche de combat [l'ennemi est à porté]
+        EtatAttaquer -> EtatDegatEnnemi : Animation de dégat
+        EtatDegatEnnemi --> EtatIdleJoueur : *
+    else Attaque ratée
+        EtatIdleJoueur -> EtatCoupLoupe : Animation de coup loupé
+        EtatCoupLoupe --> EtatIdleJoueur : *
+    end
+
+    /' Soit l'ennemie avance vers le joueur, soit il attaque '/
+    alt Joueur a porté
+        EtatCombatEnnemi -> EtatEnnemiProjectile : Création Projectile
+        alt Projectile touche le joueur
+            EtatEnnemiProjectile -> EtatDegatJoueur : Animation de dégat
+            EtatDegatJoueur -> EtatCombatEnnemi : *
+        else Projectile rate le joueur
+            EtatEnnemiProjectile -> EtatCombatEnnemi : *
+        end
+    else Joueur hors de porté
+        EtatCombatEnnemi -> EtatEnnemiDeplacement : Ennemi à detecter le joueur
+        note over EtatEnnemiDeplacement : L'ennemi se déplace vers le joueur
+        EtatEnnemiDeplacement -> EtatCombatEnnemi : *
+    end
+    
+    
+    
+    /' Je ne suis pas sûr de comment représenter les morts, 
+    peut-être partant de l'attaque directement 
+    (reçu pour la mort du joueur et asséné pour celle de l'ennemi)
+    '/
+    EtatIdleJoueur -> EtatMortJoueur !! : Le joueur n'a plus de vie / Ecran de mort
+    EtatCombatEnnemi -> EtatEnnemiMort !! : L'ennemi n'a plus de vie / Animation de mort
+end
+
+EtatCombatEnnemi -> EtatIdleEnnemi : Le joueur n'est plus dans le champ de détection
+
+
+@enduml
