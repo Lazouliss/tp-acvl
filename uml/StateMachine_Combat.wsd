@@ -31,8 +31,8 @@ state Combat {
     [*] --> IdleJoueur
     IdleJoueur -> Attaque :Joueur lance une attaque / Animation
     Attaque -down-> DegatEnnemi :Ennemi à porté / Animation de dégat
-    DegatEnnemi -> Idle :*
-    Attaque -left-> Idle :Pas d'ennemi à porté 
+    DegatEnnemi -> IdleJoueur :*
+    Attaque -left-> IdleJoueur :Pas d'ennemi à porté 
 
     --
     [*] -right-> IdleEnnemi
