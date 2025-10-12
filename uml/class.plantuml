@@ -1,0 +1,260 @@
+@startuml
+
+skinparam linetype ortho
+
+class AttackableCharacter {
+  - hp: int
+  - shield: int
+  - strength: int
+  + getDefense(): int
+  + getShield(): int
+  + getAttack(): int
+  + attacked(int): void
+  + getStrength(): int
+  + setShield(int): void
+  + attack(AttackableCharacter): void
+  + setHp(int): void
+  + getHp(): int
+  + setStrength(int): void
+}
+class Character {
+  - speed: int
+  + setSpeed(int): void
+  + getSpeed(): int
+  + move(int, int): void
+  + renderRigidObject(RigidObjectRenderer): void
+  + renderCharacter(CharacterRenderer): void
+}
+class CharacterRenderer {
+  + renderNeutralCharacter(NeutralCharacter): void
+  + renderEnnemy(Ennemy): void
+  + renderPlayer(Player): void
+}
+class Coin {
+  - value: int
+  + collect(Player): void
+}
+interface Collectable << interface >> {
+  + collect(Player): void
+}
+class CollidableObject {
+  - collidableObjects: ArrayList<CollidableObject>
+  + isRigid(): boolean
+  + removeCollidable(CollidableObject): void
+  + isCollectable(): boolean
+  + addCollidable(CollidableObject): void
+  + checkForCollisions(): List<CollidableObject>
+  + checkForRigidCollisionsAt(int, int): boolean
+  + isInteractable(): boolean
+}
+class Color {
+  - r: int
+  - b: int
+  + BLUE: Color
+  + RED: Color
+  + WHITE: Color
+  + GREEN: Color
+  - g: int
+  + BLACK: Color
+  + red(): int
+  + blue(): int
+  + green(): int
+}
+class Ennemy {
+  + execute(): void
+  + renderCharacter(CharacterRenderer): void
+}
+class EnnemyRenderer {
+  + renderEnnemy(Ennemy): void
+}
+class FloorCollectableObject {
+  - collectableItem: Collectable
+  + renderGameObject(GameObjectRenderer): void
+  + execute(): void
+}
+interface GameContext << interface >> {
+  + getWindowWidth(): int
+  + getWindowHeight(): int
+  + getPlayer(): Player
+}
+class GameObject {
+  # gameContext: GameContext
+  + execute(): void
+  + renderGameObject(GameObjectRenderer): void
+}
+class GameObjectRenderer {
+  + renderRigidObject(RigidObject): void
+  + renderFloorCollectableObject(FloorCollectableObject): void
+  + renderRoom(Room): void
+  + renderWorld(World): void
+}
+interface GraphicEngine << interface >> {
+  + drawEllipse(int, int, int, int, Color): void
+  + drawFillEllipse(int, int, int, int, Color, Color): void
+  + height(): int
+  + drawRectangle(int, int, int, int, Color): void
+  + drawFillRectangle(int, int, int, int, Color, Color): void
+  + width(): int
+  + loadImage(String): Object
+  + init(int, int): void
+  + drawImage(Object, int, int, int, int): void
+}
+class InputController {
+  ~ rightPressed: boolean
+  ~ leftPressed: boolean
+  ~ downPressed: boolean
+  ~ upPressed: boolean
+  - player: Player
+  + handleInput(int, boolean): void
+  + execute(): void
+}
+interface Interactable << interface >> {
+  + interact(Player): void
+}
+class MainGame {
+  ~ graphicEngine: ProcessingGraphicEngine
+  ~ world: World
+  ~ player: Player
+  ~ gameRenderer: GameObjectRenderer
+  ~ inputController: InputController
+  + keyPressed(): void
+  + main(String[]): void
+  + settings(): void
+  + draw(): void
+  + getWindowHeight(): int
+  + getPlayer(): Player
+  + keyReleased(): void
+  + setup(): void
+  + getWindowWidth(): int
+}
+interface Movable << interface >> {
+  + move(int, int): void
+}
+class NeutralCharacter {
+  + renderCharacter(CharacterRenderer): void
+  + interact(Player): void
+  + execute(): void
+}
+class Obstacle {
+  + renderRigidObject(RigidObjectRenderer): void
+  + execute(): void
+}
+class ObstacleRenderer {
+  + renderObstacle(Obstacle): void
+}
+class Player {
+  - isInteractionEnabled: boolean
+  - coins: int
+  + getAttack(): int
+  + getCoins(): int
+  + addCoins(int): void
+  + renderCharacter(CharacterRenderer): void
+  + isInteractionEnabled(): boolean
+  + setInteractionEnabled(boolean): void
+  + getDefense(): int
+  + execute(): void
+  + setCoins(int): void
+}
+class PlayerRenderer {
+  + renderPlayer(Player): void
+}
+class PositionableObject {
+  - height: int
+  - width: int
+  - x: int
+  - y: int
+  + setY(int): void
+  + getWidth(): int
+  + getHeight(): int
+  + setWidth(int): void
+  + setHeight(int): void
+  + setPosition(int, int): void
+  + setX(int): void
+  + getX(): int
+  + getY(): int
+}
+class ProcessingGraphicEngine {
+  - pApplet: PApplet
+  + drawFillRectangle(int, int, int, int, Color, Color): void
+  + drawFillEllipse(int, int, int, int, Color, Color): void
+  + height(): int
+  + loadImage(String): Object
+  + drawEllipse(int, int, int, int, Color): void
+  + init(int, int): void
+  + drawRectangle(int, int, int, int, Color): void
+  + drawImage(Object, int, int, int, int): void
+  + width(): int
+}
+
+class Renderer {
+  ~ graphicEngine: GraphicEngine
+  + getGraphicEngine(): GraphicEngine
+}
+class RigidObject {
+  + renderGameObject(GameObjectRenderer): void
+  + renderRigidObject(RigidObjectRenderer): void
+}
+class RigidObjectRenderer {
+  + renderObstacle(Obstacle): void
+  + renderCharacter(Character): void
+}
+class Room {
+  ~ gameObjects: ArrayList<GameObject>
+  + renderGameObject(GameObjectRenderer): void
+  + execute(): void
+  + generate(): void
+  + getGameObjects(): ArrayList<GameObject>
+}
+class RoomRenderer {
+  + renderRoom(Room): void
+}
+class World {
+  - rooms: ArrayList<Room>
+  - currentRoom: Room
+  + renderGameObject(GameObjectRenderer): void
+  + getCurrentRoom(): Room
+  + generate(): void
+  + setCurrentRoom(Room): void
+  + execute(): void
+}
+class WorldRenderer {
+  + renderWorld(World): void
+}
+
+AttackableCharacter      -[#000082,plain]-^  Character               
+Character                -[#008200,dashed]-^  Movable                 
+Character                -[#000082,plain]-^  RigidObject             
+CharacterRenderer        -[#000082,plain]-^  Renderer                
+Coin                     -[#008200,dashed]-^  Collectable             
+CollidableObject         -[#000082,plain]-^  PositionableObject      
+Ennemy                   -[#000082,plain]-^  AttackableCharacter     
+EnnemyRenderer           -[#000082,plain]-^  Renderer                
+FloorCollectableObject  "1" *-[#595959,plain]-> "collectableItem\n1" Collectable             
+FloorCollectableObject   -[#000082,plain]-^  CollidableObject        
+GameObject              "1" *-[#595959,plain]-> "gameContext\n1" GameContext             
+GameObjectRenderer       -[#000082,plain]-^  Renderer                
+InputController         "1" *-[#595959,plain]-> "player\n1" Player                  
+MainGame                 -[#008200,dashed]-^  GameContext             
+MainGame                "1" *-[#595959,plain]-> "gameRenderer\n1" GameObjectRenderer      
+MainGame                "1" *-[#595959,plain]-> "inputController\n1" InputController         
+MainGame                "1" *-[#595959,plain]-> "player\n1" Player                  
+MainGame                "1" *-[#595959,plain]-> "graphicEngine\n1" ProcessingGraphicEngine 
+MainGame                "1" *-[#595959,plain]-> "world\n1" World                   
+NeutralCharacter         -[#000082,plain]-^  Character               
+NeutralCharacter         -[#008200,dashed]-^  Interactable            
+Obstacle                 -[#000082,plain]-^  RigidObject             
+ObstacleRenderer         -[#000082,plain]-^  Renderer                
+Player                   -[#000082,plain]-^  AttackableCharacter     
+PlayerRenderer           -[#000082,plain]-^  Renderer                
+PositionableObject       -[#000082,plain]-^  GameObject              
+ProcessingGraphicEngine  -[#008200,dashed]-^  GraphicEngine           
+Renderer                "1" *-[#595959,plain]-> "graphicEngine\n1" GraphicEngine           
+RigidObject              -[#000082,plain]-^  CollidableObject        
+RigidObjectRenderer      -[#000082,plain]-^  Renderer                
+Room                     -[#000082,plain]-^  GameObject              
+Room                    "1" *-[#595959,plain]-> "gameObjects\n*" GameObject              
+RoomRenderer             -[#000082,plain]-^  Renderer                
+World                    -[#000082,plain]-^  GameObject              
+World                   "1" *-[#595959,plain]-> "rooms\n*" Room                    
+WorldRenderer            -[#000082,plain]-^  Renderer                
+@enduml
