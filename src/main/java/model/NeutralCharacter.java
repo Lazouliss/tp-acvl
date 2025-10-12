@@ -16,4 +16,9 @@ public class NeutralCharacter extends Character implements Interactable {
     public void interact(Player p) {
         // TODO : Manage interaction
     }
+
+    @Override
+    public void execute() {
+
+    }
 }

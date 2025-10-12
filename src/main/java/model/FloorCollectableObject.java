@@ -13,6 +13,11 @@ public class FloorCollectableObject extends CollidableObject {
 
     @Override
     public void renderGameObject(GameObjectRenderer gameObjectRenderer) {
+        gameObjectRenderer.renderFloorCollectableObject(this);
+    }
+
+    @Override
+    public void execute() {
 
     }
 }

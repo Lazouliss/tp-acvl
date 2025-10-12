@@ -20,7 +20,7 @@ public class World extends GameObject {
 
     @Override
     public void execute() {
-        // do nothing
+        currentRoom.execute();
     }
 
     public void generate() {

@@ -51,9 +51,4 @@ public abstract class PositionableObject extends GameObject {
         setX(x);
         setY(y);
     }
-
-    @Override
-    public void execute() {
-        // TODO : implement
-    }
 }

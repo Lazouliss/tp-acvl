@@ -36,19 +36,14 @@ public abstract class Character extends RigidObject implements Movable {
         int nextX = getX() + x * speed;
         int nextY = getY() + y * speed;
 
-        List<CollidableObject> colliders = checkForCollisions(nextX, nextY);
-
-        boolean canMove = true;
-
-        for(CollidableObject c : colliders) {
-            if(c.isRigid()) {
-                canMove = false;
-            }
+        int i = 1;
+        while (checkForRigidCollisionsAt(nextX, nextY) && i <= speed) {
+            nextX = getX() + x * (speed - i);
+            nextY = getY() + y * (speed - i);
+            i++;
         }
 
-        if(canMove) {
-            setPosition(nextX, nextY);
-        }
+        setPosition(nextX, nextY);
     }
 
     @Override

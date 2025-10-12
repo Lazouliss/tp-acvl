@@ -16,7 +16,8 @@ public class CharacterRenderer extends Renderer {
     }
 
     public void renderEnnemy(Ennemy ennemy) {
-
+        EnnemyRenderer ennemyRenderer = new EnnemyRenderer(getGraphicEngine());
+        ennemyRenderer.renderEnnemy(ennemy);
     }
 
     public void renderNeutralCharacter(NeutralCharacter neutralCharacter) {

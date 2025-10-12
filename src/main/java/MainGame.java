@@ -23,6 +23,8 @@ public class MainGame extends PApplet implements GameContext {
 
     @Override
     public void setup() {
+        frameRate(60);
+
         graphicEngine = new ProcessingGraphicEngine(this);
         gameRenderer = new GameObjectRenderer(graphicEngine);
         world = new World(this);
@@ -38,6 +40,7 @@ public class MainGame extends PApplet implements GameContext {
         player.renderGameObject(gameRenderer);
 
         inputController.execute();
+        world.execute();
     }
 
     @Override
@@ -63,5 +66,10 @@ public class MainGame extends PApplet implements GameContext {
     @Override
     public int getWindowHeight() {
         return height;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return player;
     }
 }

@@ -15,17 +15,31 @@ public abstract class CollidableObject extends PositionableObject {
         CollidableObject.addCollidable(this);
     }
 
-    public List<CollidableObject> checkForCollisions(int x, int y) {
+    public List<CollidableObject> checkForCollisions() {
         ArrayList<CollidableObject> colliders = new ArrayList<>();
         for(CollidableObject c : collidableObjects) {
             if(c != this) {
-                if (Math.abs(x - c.getX()) < (c.getWidth() + getWidth()) / 2
-                        && Math.abs(y - c.getY()) < (c.getHeight() + getHeight()) / 2) {
+                if (Math.abs(getX() - c.getX()) < (c.getWidth() + getWidth()) / 2
+                        && Math.abs(getY() - c.getY()) < (c.getHeight() + getHeight()) / 2) {
                     colliders.add(c);
                 }
             }
         }
         return colliders;
+    }
+
+    public boolean checkForRigidCollisionsAt(int x, int y) {
+        for(CollidableObject c : collidableObjects) {
+            if(c != this) {
+                if (Math.abs(x - c.getX()) < (c.getWidth() + getWidth()) / 2
+                && Math.abs(y - c.getY()) < (c.getHeight() + getHeight()) / 2) {
+                    if(c.isRigid() && this.isRigid()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public boolean isRigid() {
