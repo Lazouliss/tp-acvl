@@ -16,7 +16,9 @@ public class Room extends GameObject {
 
     @Override
     public void execute() {
-        // Do nothing
+        for(GameObject gameObject : gameObjects) {
+            gameObject.execute();
+        }
     }
 
     public void generate() {
@@ -27,6 +29,10 @@ public class Room extends GameObject {
             Obstacle obstacle = new Obstacle(gameContext, x, y, 30, 30);
             gameObjects.add(obstacle);
         }
+
+        // Spawn an ennemy
+        Ennemy ennemy = new Ennemy(gameContext, 100, 100);
+        gameObjects.add(ennemy);
     }
 
     public ArrayList<GameObject> getGameObjects() {

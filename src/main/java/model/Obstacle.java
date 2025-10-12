@@ -13,4 +13,9 @@ public class Obstacle extends RigidObject {
     public void renderRigidObject(RigidObjectRenderer rigidObjectRenderer) {
         rigidObjectRenderer.renderObstacle(this);
     }
+
+    @Override
+    public void execute() {
+
+    }
 }

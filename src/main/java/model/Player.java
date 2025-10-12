@@ -54,4 +54,9 @@ public class Player extends AttackableCharacter {
     public void renderCharacter(CharacterRenderer characterRenderer) {
         characterRenderer.renderPlayer(this);
     }
+
+    @Override
+    public void execute() {
+        // TODO
+    }
 }
