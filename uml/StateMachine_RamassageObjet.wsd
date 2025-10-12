@@ -1,0 +1,19 @@
+
+@startuml RammassageObjet
+
+[*] --> Idle
+Idle --> ChoixTypeObjet : Collision avec objet
+
+ChoixTypeObjet -left-> Idle : Objet de type piece / Ajouter au compteur de pieces
+ChoixTypeObjet --> Idle : Objet de type potion / Consommer potion
+ChoixTypeObjet --> ChoixSlot : Objet de type équipement
+
+ChoixSlot --> SlotIndisponible :Le slot dédié au type est indisponible / Jet de l'objet
+SlotIndisponible -left-> ChoixSlot :*
+
+ChoixSlot -up-> Idle : L'objet est de type arme / Placer dans le slot Arme
+ChoixSlot -up-> Idle : L'objet est de type defense / Placer dans le slot Defense
+ChoixSlot -up-> Idle : L'objet est de type Activable / Placer dans le slot Activable
+
+@enduml
+

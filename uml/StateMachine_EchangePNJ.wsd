@@ -1,0 +1,11 @@
+@startuml EchangePNJ
+
+[*] --> Idle
+Idle --> DialoguePNJ :Le joueur entre en collision avec le PNJ / Déclenche le dialogue
+DialoguePNJ --> EchangePNJ :Le joueur accepte l'échange proposé
+DialoguePNJ --> Idle :Le joueur s'éloigne du PNJ
+EchangePNJ --> Idle :Le joueur n'a pas les pieces necessaires / notifie le joueur
+EchangePNJ --> Idle :Le joueur a les pieces necessaires / ramassage objet + perte pieces
+
+@enduml
+
