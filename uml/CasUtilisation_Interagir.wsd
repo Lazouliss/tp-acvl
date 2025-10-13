@@ -25,7 +25,9 @@ N_Intéragir .. (Intéragir)
 (Déposer l'objet) ..> (Le placer sur une case disponible) :inclut
 
 (Intéragir) .left.> (Ouvrir une porte) :etend \n[condition : collision avec une porte]
-(Ouvrir une porte) ..> (Changer de salle) :inclut
+(Changer de salle) .right.> (Ouvrir une porte) :etend \n[condition : Le joueur valide l'intéraction]
+(Ouvrir une porte) .down.> (Donner indice sur la porte)  :inclut \n
+
 
 :PNJ: -- (Ouvrir un Dialogue)
 note bottom of (Ouvrir un Dialogue)
