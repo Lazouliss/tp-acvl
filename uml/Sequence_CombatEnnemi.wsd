@@ -1,0 +1,40 @@
+@startuml Sequence_CombatEnnemi
+
+/'Version simplifiée du diagramme de séquence de combat de l'ennemi'/
+
+actor Ennemi
+
+participant "Etat IdleEnnemi" as EtatIdleEnnemi
+participant "Etat CombatEnnemi" as EtatCombatEnnemi
+participant "Etat EnnemiDeplacement" as EtatEnnemiDeplacement
+participant "Etat EnnemiProjectile" as EtatEnnemiProjectile
+participant "Etat EnnemiMort" as EtatEnnemiMort
+participant "Etat DegatJoueur" as EtatDegatJoueur
+
+Ennemi -> EtatIdleEnnemi : Lancement du jeu
+EtatIdleEnnemi -> EtatCombatEnnemi : Détection du joueur
+
+loop Combat
+
+    /' Soit l'ennemie avance vers le joueur, soit il attaque '/
+    alt Joueur a porté
+        EtatCombatEnnemi -> EtatEnnemiProjectile : Création Projectile
+        alt Projectile touche le joueur
+            EtatEnnemiProjectile -> EtatDegatJoueur : Animation de dégat
+            EtatDegatJoueur -> EtatCombatEnnemi : *
+        else Projectile rate le joueur
+            EtatEnnemiProjectile -> EtatCombatEnnemi : *
+        end
+    else Joueur hors de porté
+        EtatCombatEnnemi -> EtatEnnemiDeplacement : Ennemi à detecter le joueur
+        note over EtatEnnemiDeplacement : L'ennemi se déplace vers le joueur
+        EtatEnnemiDeplacement -> EtatCombatEnnemi : *
+    end
+    
+    EtatCombatEnnemi -> EtatEnnemiMort !! : L'ennemi n'a plus de vie / Animation de mort
+end
+
+EtatCombatEnnemi -> EtatIdleEnnemi : Le joueur n'est plus dans le champ de détection
+
+
+@enduml

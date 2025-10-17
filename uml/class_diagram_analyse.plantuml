@@ -1,0 +1,95 @@
+@startuml
+
+class Jeu{
+}
+
+Jeu *-- Joueur
+Jeu *-- Carte
+
+class Carte {
+}
+
+class Étage {
+}
+
+class Salle {
+    tailleX: int
+    tailleY: int
+}
+
+class Obstacle {
+    posX: int
+    posY: int
+    sizeX: int
+    sizeY: int
+}
+
+Salle *-- "*" Obstacle
+
+class Objet {
+    posX: int
+    posY: int
+}
+
+class Arme {
+    degat: int
+}
+
+class Potion {
+    defense: int
+}
+
+class Pièce {
+    valeur: int
+}
+
+Objet <|-- Arme
+Objet <|-- Potion
+Objet <|-- Pièce
+
+Salle o-- Objet
+
+class Porte {
+}
+
+Carte *-- "1..*" Étage
+Étage *-- "2..*" Salle
+
+Salle -- "1..*" Salle
+
+(Salle, Salle) . Porte
+
+class Personnage {
+    posX: int
+    posY: int
+    pv: int
+}
+
+class PersonnageNonJoueur {
+}
+
+Personnage <|-- PersonnageNonJoueur
+
+class Joueur {
+}
+
+class Ennemie {
+}
+
+class Neutre {
+}
+
+
+Personnage <|-- Joueur
+PersonnageNonJoueur <|-- Ennemie
+PersonnageNonJoueur <|-- Neutre
+
+Joueur "0..1" -- "1" Arme
+Joueur "0..1" -- "*" Pièce
+
+
+PersonnageNonJoueur "*" -- "1" Salle
+Joueur "0..1" -- "1" Salle
+
+
+@enduml

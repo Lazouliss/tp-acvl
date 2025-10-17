@@ -1,0 +1,23 @@
+@startuml UseCase_Global
+
+left to right direction
+
+actor Joueur
+actor Ennemi
+
+:Joueur: -- (Se déplacer)
+(Se déplacer) ..> (Le personnage veut bouger) :inclut
+(Le personnage veut bouger) .right.> (Vérifier si le déplacement est possible) :inclut
+(Le personnage veut bouger) .left.> (Le personnage est en vie) :inclut
+
+:Joueur: -- (Intéragir)
+:Joueur: -- (Combattre)
+:Joueur: -- (Subir des dégâts)
+
+:Ennemi: -- (Attaquer)
+(Attaquer) ..> (Combattre) :etend \n[condition : collision entre le joueur et l'ennemi]
+(Attaquer) ..> (Subir des dégâts) :etend \n[condition : attaque reussie]
+
+
+@enduml
+
