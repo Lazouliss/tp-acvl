@@ -1,0 +1,17 @@
+@startuml DéplacementEnnemi
+actor Ennemi
+
+participant "Ennemi Execution" as EnnemiExec
+participant "Get Joueur Position" as GetPlayerPos
+participant "Calcul Deplacement" as CalculDeplacement
+participant "Deplacement Ennemi" as DeplacementEnnemi
+
+
+
+Ennemi -> EnnemiExec        : GameObject.execute()
+EnnemiExec -> GetPlayerPos  : gameContext.getPlayer()
+GetPlayerPos -> CalculDeplacement  : Calculer en fonction de la position du joueur
+CalculDeplacement -> DeplacementEnnemi :move(dx,dy)
+
+
+@enduml
