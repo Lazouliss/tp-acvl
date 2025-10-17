@@ -7,11 +7,15 @@ participant "gameContext" as gameContext
 actor Room
 loop for(int i = 0; i < 3; i++)
     Room -> Math : Math.round / Math.random()
+    Math --> Room : Nombre aléatoire
     Room -> gameContext : getWindowWidth()
+    gameContext --> Room : Largeur de la fenêtre
     Room -> Room : Calcul de x
 
     Room -> Math : Math.round / Math.random()
+    Math --> Room : Nombre aléatoire
     Room -> gameContext : getWindowHeight()
+    gameContext --> Room : Hauteur de la fenêtre
     Room -> Room : Calcul de y
 
     Room -> Obstacle ** : new Obstacle
