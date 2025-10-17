@@ -1,0 +1,28 @@
+@startuml Sequence_CombatJoueur
+
+/'Version simplifiée du diagramme de séquence de combat du joueur'/
+
+actor Joueur
+
+participant "Etat IdleJoueur" as EtatIdleJoueur
+participant "Etat Attaquer" as EtatAttaquer
+participant "Etat DegatEnnemi" as EtatDegatEnnemi
+participant "Etat MortJoueur" as EtatMortJoueur
+
+Joueur -> EtatIdleJoueur : Lancement du jeu
+
+loop Combat
+    EtatIdleJoueur -> EtatAttaquer : Appuie sur la touche de combat (Animation de l'attaque)
+    alt Attaque réussie (l'ennemi est à porté)
+        EtatAttaquer -> EtatDegatEnnemi : Animation de dégat
+        EtatDegatEnnemi --> EtatIdleJoueur : *
+    else Attaque ratée
+        EtatAttaquer --> EtatIdleJoueur : *
+    end
+
+    EtatIdleJoueur -> EtatMortJoueur !! : Le joueur n'a plus de vie / Ecran de mort
+end
+
+
+
+@enduml
