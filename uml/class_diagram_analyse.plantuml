@@ -89,7 +89,7 @@ Joueur "0..1" -- "*" Pièce
 
 
 PersonnageNonJoueur "*" -- "1" Salle
-Joueur "1" -- "1" Salle
+Joueur "0..1" -- "1" Salle
 
 
 @enduml
