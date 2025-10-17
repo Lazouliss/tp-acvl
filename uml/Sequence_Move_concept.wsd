@@ -1,0 +1,46 @@
+@startuml
+title Diagramme de séquence - Méthode move(int x, int y)
+
+
+participant "PositionableObject" as GO
+actor "Character" as Caller
+
+
+participant "CollidableObject" as checkCollision
+
+
+
+alt x != 0
+    Caller -> Caller : x = x / |x|
+end
+
+alt y != 0
+    Caller -> Caller : y = y / |y|
+end
+
+Caller -> GO : getX()
+GO --> Caller : posX
+Caller -> GO : getY()
+GO --> Caller : posY
+
+Caller -> Caller : nextX = posX + x * speed\nnextY = posY + y * speed
+Caller -> Caller : i = 1
+
+loop while checkForRigidCollisionsAt(nextX, nextY) == true and i <= speed
+    Caller -> checkCollision : checkForRigidCollisionsAt(nextX, nextY)
+    checkCollision --> Caller : true/false
+
+    Caller -> GO : getX()
+    GO --> Caller : posX
+    Caller -> GO : getY()
+    GO --> Caller : posY
+
+    Caller -> Caller : nextX = posX + x * (speed - i)\nnextY = posY + y * (speed - i)\ni++
+end
+
+Caller -> GO : setPosition(nextX, nextY)
+GO --> Caller : position mise à jour
+
+Caller --> Caller : fin move()
+
+@enduml
