@@ -1,0 +1,29 @@
+@startuml Roomgeneration
+
+participant "Math" as Math
+participant "gameContext" as gameContext
+
+
+actor Room
+loop for(int i = 0; i < 3; i++)
+    Room -> Math : Math.round / Math.random()
+    Room -> gameContext : getWindowWidth()
+    Room -> Room : Calcul de x
+
+    Room -> Math : Math.round / Math.random()
+    Room -> gameContext : getWindowHeight()
+    Room -> Room : Calcul de y
+
+    Room -> Obstacle ** : new Obstacle
+
+    Room -> Room :gameObjects.add(obstacle);
+end
+
+Room -> Ennemy ** : new Ennemy
+
+participant "Obstacle" as Obstacle
+participant "Ennemy" as Ennemy
+
+
+
+@enduml
