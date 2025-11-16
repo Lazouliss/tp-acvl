@@ -12,21 +12,6 @@
         <maven.compiler.release>23</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.github.micycle1</groupId>
-            <artifactId>processing-core-4</artifactId>
-            <version>4.4.4</version>
-        </dependency>
-    </dependencies>    
     
     <build>
         <plugins>
@@ -44,7 +29,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <release>23</release> <!-- Change selon ta version de Java -->
+                    <release>23</release>
                 </configuration>
             </plugin>
         </plugins>
